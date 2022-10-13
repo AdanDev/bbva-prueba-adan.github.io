@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   dataGameUsers: [],
+  currentUserNumber: -1,
 };
 
 export const gameSlice = createSlice({
@@ -10,14 +11,14 @@ export const gameSlice = createSlice({
   reducers: {
     loadDataGame: (state, action) => {
       const userName = action.payload;
-      
       const dataGameUsersState = JSON.parse(localStorage.getItem('dataGameUsersState'));
+      
       if(dataGameUsersState){
         const userIndex = dataGameUsersState.findIndex(
           (user) => user.name === userName
         );
         if (userIndex !== -1) {
-          localStorage.setItem('currentUserNumber', userIndex);
+          state.currentUserNumber = userIndex;
         }
       }
     },
@@ -49,11 +50,13 @@ export const gameSlice = createSlice({
           highScore: shoeScore,
           points: shoeScore,
         });
+        state.currentUserNumber = dataGameUsersState.length-1;
       }
       localStorage.setItem('dataGameUsersState', JSON.stringify(dataGameUsersState));
     },
     clearUserGame: (state) => {
       localStorage.removeItem('currentUserNumber');
+      state.currentUserNumber = -1;
     },
   },
 });

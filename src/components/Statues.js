@@ -10,16 +10,12 @@ import { StatuesContainer } from "../styles/components/Statues.styled";
 
 export const Statues = () => {
   const userName = useSelector((state) => state.registry.userName);
-  const currentUserNumber = localStorage.getItem('currentUserNumber');
-  let highScore = 0;
-  let points = 0;
-  if(currentUserNumber){
-    const currentDataGame = JSON.parse(localStorage.getItem('dataGameUsersState'));
-    highScore = currentDataGame[currentUserNumber].highScore;
-    points = currentDataGame[currentUserNumber].points;
-  }
+  const currentUserNumber = useSelector((state) => state.game.currentUserNumber);
+  const dataGameUsers = useSelector((state) => state.game.dataGameUsers);
 
-  const [shoeScore, setShoeScore] = useState(points);
+  const [shoeScore, setShoeScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  
   const [lastShoe, setLastShoe] = useState("");
   const [greenLightActive, setGreenLightActive] = useState(true);
 
@@ -33,6 +29,14 @@ export const Statues = () => {
     dispatch(loadDataGame(userName));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(currentUserNumber > -1){
+      const currentDataGame = JSON.parse(localStorage.getItem('dataGameUsersState'));
+      setHighScore(currentDataGame[currentUserNumber].highScore);
+      setShoeScore(currentDataGame[currentUserNumber].points);
+    }
+  }, [currentUserNumber, dataGameUsers]);
 
   useEffect(() => {
     if (greenLightActive) {
