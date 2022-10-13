@@ -5,6 +5,6 @@ En el juego de las estatuas tienes que batir tu propio record pulsando el boton 
 
 <h2>Pasos para ejecutar la aplicación una vez en local</h2>
 
-1.- Instalar el paquete node_modules con sus dependencias ejecutando el comando npm install
+> 1.- Instalar el paquete node_modules con sus dependencias ejecutando el comando npm install
 
-2.- Ejecutar el comando npm run start
+> 2.- Ejecutar el comando npm run start
