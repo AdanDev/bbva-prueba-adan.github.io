@@ -11,15 +11,16 @@ export const gameSlice = createSlice({
   reducers: {
     loadDataGame: (state, action) => {
       const userName = action.payload;
-      const dataGameUsersState = JSON.parse(localStorage.getItem('dataGameUsersState'));
-      
-      if(dataGameUsersState){
-        const userIndex = dataGameUsersState.findIndex(
+      const dataGameUsersStorage = JSON.parse(localStorage.getItem('dataGameUsersState'));
+  
+      if(dataGameUsersStorage){
+        const userIndex = dataGameUsersStorage.findIndex(
           (user) => user.name === userName
         );
         if (userIndex !== -1) {
           state.currentUserNumber = userIndex;
         }
+        state.dataGameUsers = dataGameUsersStorage;
       }
     },
     saveDataGame: (state, action) => {
